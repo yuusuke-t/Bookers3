@@ -1,0 +1,53 @@
+
+<% if flash[:notice] %>
+<div class="flash">
+	<%= flash[:notice] %>
+</div>
+<% end %>
+
+
+<h2>User info</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<td><%= attachment_image_tag user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg" %></td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>name <%= user.name %></td>
+		</tr>
+		<tr>
+			<td>introduction <%= user.introduction %></td>
+		</tr>
+		<tr>
+			<td><% if user.id == current_user.id %>
+				<%= link_to "設定", edit_user_path(user),class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_14347" %>
+				<% end %>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+<h2>New book</h2>
+<%= form_for(book, url: books_path) do |f| %>
+<% if book.errors.any? %>
+<%= book.errors.count %>errors prohibited this obj from being saved:
+<%= book.errors.full_messages.each do |message| %>
+<%= message %>
+<% end %>
+<% end %>
+<div>
+<p>Title</p>
+<%= f.text_field :title, class:"col-xs-12" %>
+</div>
+<div>
+<p>Opinion</p>
+<%= f.text_area :body, class:"col-xs-12"%>
+</div>
+<div>
+<%= f.submit 'Create Book', class:"btn btn-primary col-xs-12"%>
+</div>
+<% end %>
